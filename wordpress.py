@@ -38,11 +38,12 @@ def create(name):
 		execute("wordpress.create_theme", name)
 		execute("mysql.create", name)
 
-
 @task
 def create_plugin(name, plugin_name):
-	with cd("/var/www/wp/%s/wp-content/plugins"):
-		run("git clone https://github.com/hlashbrooke/WordPress-Plugin-Template.git %s" % plugin_name)
+	with cd(wp_base):
+		with cd(name):
+			with cd("wp-content/plugins"):
+				run("git clone https://github.com/hlashbrooke/WordPress-Plugin-Template.git %s" % plugin_name)
 
 @task
 def create_theme(name, theme_name):

@@ -1,0 +1,22 @@
+<VirtualHost *:80>
+        ServerName {{name}}
+        {%for alias in aliases %}
+        serveralias {{alias}}
+        {% endfor %}
+        DocumentRoot {{doc_root}}
+
+        ErrorLog ${APACHE_LOG_DIR}/error.log
+
+        # Possible values include: debug, info, notice, warn, error, crit,
+        # alert, emerg.
+        LogLevel warn
+
+        CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+        CacheEnable mem /
+        MCacheSize 4096
+        MCacheMaxObjectCount 100
+        MCacheMinObjectSize 1
+        MCacheMaxObjectSize 2048
+
+</VirtualHost>
