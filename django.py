@@ -12,7 +12,7 @@ mixes = {
 
 @task
 def startproject(name, mode="default"):
-	dj_base = env["settings"]["django"]
+	dj_base = env["settings"]["base_paths"]["django"]
 	with prefix("source virtualenvwrapper.sh"):
 		with cd(dj_base):
 			run("mkvirtualenv %s" % name)

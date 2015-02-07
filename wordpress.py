@@ -4,11 +4,11 @@ from fabric.contrib.files import *
 import requests
 import re
 
-wp_base ="/var/www"
 wp_ita = "https://it.wordpress.org/wordpress-4.1-it_IT.zip"
 
 @task
 def create(name):
+	wp_base = env["settings"]["base_paths"]["wp"]	
 	salt = requests.get("https://api.wordpress.org/secret-key/1.1/salt/").text.split("\n")
 	print salt
 	
@@ -16,8 +16,7 @@ def create(name):
 		run("wget %s" % wp_ita)
 		run("unzip wordpress-4.1-it_IT.zip")
 		run("mv wordpress %s" % name)
-		#run("git clone https://github.com/WordPress/WordPress.git")
-		#run("mv WordPress %s" % name)
+		run("rm wordpress-4.1-it_IT.zip")
 		run("chown -R www-data:www-data %s/%s" % (wp_base, name))
 		with cd(name):
 			with cd("wp-content/plugins"):
@@ -40,6 +39,7 @@ def create(name):
 
 @task
 def create_plugin(name, plugin_name):
+	wp_base = env["settings"]["base_paths"]["wp"]	
 	with cd(wp_base):
 		with cd(name):
 			with cd("wp-content/plugins"):
@@ -47,6 +47,7 @@ def create_plugin(name, plugin_name):
 
 @task
 def create_theme(name, theme_name):
+	wp_base = env["settings"]["base_paths"]["wp"]	
 	with cd(wp_base):
 		with cd(name):
 			with cd("wp-content/themes"):
