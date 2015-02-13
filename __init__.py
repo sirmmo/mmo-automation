@@ -1,7 +1,7 @@
 from fabric.api import *
 from fabric.colors import *
 
-from . import mysql, django, repo, wordpress, apache, raw
+from . import mysql, django, repo, wordpress, apache, raw, gandi
 
 import json
 import os.path
